@@ -47,4 +47,5 @@ public class Json {
         HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
         return restTemplate.postForObject(TARGET_URL, requestEntity, String.class);
     }
+
 }
