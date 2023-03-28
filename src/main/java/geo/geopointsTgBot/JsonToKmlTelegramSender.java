@@ -21,10 +21,16 @@ public class JsonToKmlTelegramSender {
 
             double longitude = json.getJSONArray("coordinates").getDouble(0);
             double latitude = json.getJSONArray("coordinates").getDouble(1);
+            String name = (json.getString("name") != null) ? json.getString("name") : "Нет данных";
+            String index = (json.getString("index") != null) ? json.getString("index") : "Нет данных";
+            String mark = (json.getString("mark") != null) ? json.getString("mark") : "Нет данных";
+            String centerType = (json.getString("centerType") != null) ? json.getString("centerType") : "Нет данных";
+            String sighType = (json.getString("sighType") != null) ? json.getString("sighType") : "Нет данных";
 
             String kmlPoint = "<Placemark>\n" +
-                    "<name>" + json.getString("name") + "</name>\n" +
-                    "<description>Индекс: " + json.getString("index") + ", марка: " + json.getString("mark") + ", тип центра: " + json.getString("centerType") + ", оп. знак: " + json.getString("sighType") + "</description>\n" +
+                    "<name>" + name + "</name>\n" +
+                    "<description>Индекс: " + index + ", марка: " + mark + ", тип центра: "
+                    + centerType + ", оп. знак: " + sighType + "</description>\n" +
                     "<Point>\n" +
                     "<coordinates>" + longitude + "," + latitude + "</coordinates>\n" +
                     "</Point>\n" +

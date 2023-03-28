@@ -31,7 +31,7 @@ public class Bot extends TelegramLongPollingBot {
     private String greeting = "Привет! Для получения kml файла с пунктами отправьте " +
             "сообщение с географическими координатами и радиусом поиска в формате:\n" +
             "широта, долгота, радиус поиска (например '55.168949, 61.212220, 10'";
-    private String wrongInput = "Неправильно введен запрос, убедитесь, что он соотвествует следующему формату:\n" +
+    private String wrongInput = "Неправильно введен запрос. Убедитесь, что он соотвествует следующему формату:\n" +
             "\"широта, долгота, радиус поиска (например '55.168949, 61.212220, 10'";
 
 
@@ -68,7 +68,7 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         var msg = update.getMessage();
         String chatId = String.valueOf(msg.getChatId());
-        sendText(msg.getChatId(), greeting);
+//        sendText(msg.getChatId(), greeting);
 
         String[] temp = msg.getText().split(",");
         if (temp.length != 3)
