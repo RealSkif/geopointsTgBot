@@ -11,5 +11,7 @@ public class GeopointsTgBotApplication {
         Bot bot = new Bot(new Json());
         botsApi.registerBot(bot);
 
+
+
     }
 }

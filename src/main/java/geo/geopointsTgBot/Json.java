@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders;
 
 
 public class Json {
-    private static final String TARGET_URL = "http://localhost:8080/ggs";
+
 
     private double x;
     private double y;
@@ -40,12 +40,17 @@ public class Json {
         return mapper.writeValueAsString(this);
     }
 
-    public String sendJsonToUrl(String json) {
+    public String sendJsonToUrl(String json, boolean gns) {
+
+        String GGS_URL = "http://localhost:8080/ggs";
+        String GNS_URL = "http://localhost:8080/gns";
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
-        return restTemplate.postForObject(TARGET_URL, requestEntity, String.class);
+        if(gns) return restTemplate.postForObject(GNS_URL, requestEntity, String.class);
+        else return restTemplate.postForObject(GGS_URL, requestEntity, String.class);
     }
 
 }
