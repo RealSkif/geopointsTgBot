@@ -19,8 +19,8 @@ public class JsonToKmlTelegramSender {
         for (int i = 0; i < gns.length(); i++) {
             JSONObject json = gns.getJSONObject(i);
 
-            double longitude = json.getJSONArray("coordinates").getDouble(0);
-            double latitude = json.getJSONArray("coordinates").getDouble(1);
+            Double longitude = json.getDouble("latitude");
+            Double latitude = json.getDouble("longitude");
             String name = (json.getString("name") != null) ? json.getString("name") : "Нет данных";
             String index = (json.getString("index") != null) ? json.getString("index") : "Нет данных";
             String mark = (json.getString("mark") != null) ? json.getString("mark") : "Нет данных";
@@ -41,8 +41,8 @@ public class JsonToKmlTelegramSender {
         for (int i = 0; i < ggs.length(); i++) {
             JSONObject json = ggs.getJSONObject(i);
 
-            double longitude = json.getJSONArray("coordinates").getDouble(0);
-            double latitude = json.getJSONArray("coordinates").getDouble(1);
+            Double longitude = json.getDouble("latitude");
+            Double latitude = json.getDouble("longitude");
             String name = (json.getString("name") != null) ? json.getString("name") : "Нет данных";
             String index = (json.getString("index") != null) ? json.getString("index") : "Нет данных";
             String mark = (json.getString("mark") != null) ? json.getString("mark") : "Нет данных";
