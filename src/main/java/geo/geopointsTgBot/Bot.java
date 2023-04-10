@@ -110,21 +110,27 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public boolean validateInput(String input) {
-        String[] temp = input.split(",");
+
+        String[] temp = input.split("[,\\s]+");
         if (temp.length != 2) return false;
-        Pattern pattern = Pattern.compile("\\d{2,3}.\\d{0,10}");
+        Pattern pattern = Pattern.compile("\\d{2,3}\\.\\d+");
         Matcher matcher1 = pattern.matcher(temp[0]);
         Matcher matcher2 = pattern.matcher(temp[1]);
         boolean valid = true;
         if (!matcher1.matches()) valid = false;
         if (!matcher2.matches()) valid = false;
         return valid;
+
     }
 
     public boolean validateCoords(String input) {
-        String[] temp = input.split(",");
-        return !(Double.parseDouble(temp[0]) < 41.0) && !(Double.parseDouble(temp[0]) > 82.0)
-                && !(Double.parseDouble(temp[1]) < 19) && !(Double.parseDouble(temp[0]) > 180);
+        double minLongitude = 19;
+        double maxLongitude = 180;
+        double minLatitude = 41;
+        double maxLatitude = 82;
+        String[] temp = input.split("[,\\s]+");
+        return !(Double.parseDouble(temp[0]) < minLatitude) && !(Double.parseDouble(temp[0]) > maxLatitude)
+                && !(Double.parseDouble(temp[1]) < minLongitude) && !(Double.parseDouble(temp[0]) > maxLongitude);
     }
 
     public void sendKml(File file, String chatId) {
