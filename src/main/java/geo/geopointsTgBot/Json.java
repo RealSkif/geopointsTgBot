@@ -40,17 +40,13 @@ public class Json {
         return mapper.writeValueAsString(this);
     }
 
-    public String sendJsonToUrl(String json, boolean gns) {
-
-        String GGS_URL = "http://localhost:8080/ggs";
-        String GNS_URL = "http://localhost:8080/gns";
-
+    public String sendJsonToUrl(String json, String url) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(json, headers);
-        if(gns) return restTemplate.postForObject(GNS_URL, requestEntity, String.class);
-        else return restTemplate.postForObject(GGS_URL, requestEntity, String.class);
+        return restTemplate.postForObject(url, requestEntity, String.class);
+
     }
 
 }
