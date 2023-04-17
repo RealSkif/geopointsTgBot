@@ -80,14 +80,15 @@ public class Bot extends TelegramLongPollingBot {
                 execute(menu.replyMenu(chatId));
                 if (msg.equals("Настройки"))
                     execute(menu.inlineMenu(chatId, menu.isGgs(), menu.isGns(), menu.getRadius()));
-                if (validateInput(msg) &&
+                if (!validateInput(msg) &&
                         (!msg.equals("Настройки") &&
                                 !msg.equals("/start"))) {
+                    System.out.println("input val " + validateInput(msg));
                     sendText(chatId, wrongInput);
-                    if (validateCoords(msg))
-                        sendText(chatId, outOfRange);
+                    if (!validateCoords(msg))System.out.println("coord val " + validateCoords(msg));
+                    {                        sendText(chatId, outOfRange);}
                 } else {
-                    String[] temp = msg.split(",");
+                    String[] temp = msg.split("[,\\s]+");
                     String jsonString = "{\n\"x\":\"" + temp[0].trim() + "\",\n\"y\":\"" + temp[1].trim() +
                             "\",\n\"radius\":\"" + menu.getRadius() + "\"\n}";
                     JSONArray ggsList = new JSONArray();

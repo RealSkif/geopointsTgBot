@@ -16,7 +16,7 @@ public class Menu {
     Bot bot;
     private boolean isGgs = true;
     private boolean isGns = true;
-    private double radius = 10;
+    private String radius = "10";
 
     public boolean isGgs() {
         return isGgs;
@@ -34,11 +34,11 @@ public class Menu {
         isGns = gns;
     }
 
-    public double getRadius() {
+    public String getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(String radius) {
         this.radius = radius;
     }
 
@@ -56,7 +56,9 @@ public class Menu {
             throw new RuntimeException(e);
         }
     }
+
     ReplyKeyboardMarkup menu = new ReplyKeyboardMarkup();
+
     public SendMessage replyMenu(long messageId) {
 
 
@@ -82,7 +84,11 @@ public class Menu {
     InlineKeyboardButton option5Button = new InlineKeyboardButton("15 км");
     InlineKeyboardButton option6Button = new InlineKeyboardButton("20 км");
 
-    public SendMessage inlineMenu(long messageId, boolean isGgs, boolean isGns, double radius) {
+    public SendMessage inlineMenu(long messageId, boolean isGgs, boolean isGns, String radius) {
+        option3Button.setText("5 км");
+        option4Button.setText("10 км");
+        option5Button.setText("15 км");
+        option6Button.setText("20 км");
         if (isGgs) option1Button.setText("✅ пункты ГГС");
         else option1Button.setText("❌ пункты ГГС");
         option1Button.setCallbackData("option1");
@@ -94,22 +100,17 @@ public class Menu {
         option0Button.setText("Укажите радиус поиска");
         option0Button.setCallbackData("option0");
 
+        switch (radius) {
+            case ("5") -> option3Button.setText("✅ 5 км");
+            case ("10") -> option4Button.setText("✅ 10 км");
+            case ("15") -> option5Button.setText("✅ 15 км");
+            case ("20") -> option6Button.setText("✅ 20 км");
 
-        if (radius == 5.0) option3Button.setText("✅ 5 км");
-        else option3Button.setText("5 км");
+        }
         option3Button.setCallbackData("option3");
-
-        if (radius == 10.0) option4Button.setText("✅ 10 км");
-        else option4Button.setText("10 км");
         option4Button.setCallbackData("option4");
-
-        if (radius == 15.0) option5Button.setText("✅ 15 км");
-        else option5Button.setText("15 км");
         option5Button.setCallbackData("option5");
-
-        if (radius == 20.0) option6Button.setText("✅ 20 км");
         option6Button.setCallbackData("option6");
-
         List<List<InlineKeyboardButton>> keyboardRowList = new ArrayList<>();
         List<InlineKeyboardButton> subMenuRow1 = new ArrayList<>();
         List<InlineKeyboardButton> subMenuRow2 = new ArrayList<>();
@@ -155,10 +156,10 @@ public class Menu {
                     isGns = true;
                 }
             }
-            case ("option3") -> radius = 5;
-            case ("option4") -> radius = 10;
-            case ("option5") -> radius = 15;
-            case ("option6") -> radius = 20;
+            case ("option3") -> radius = "5";
+            case ("option4") -> radius = "10";
+            case ("option5") -> radius = "15";
+            case ("option6") -> radius = "20";
         }
     }
 }
