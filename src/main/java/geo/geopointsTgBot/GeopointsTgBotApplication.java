@@ -10,8 +10,5 @@ public class GeopointsTgBotApplication {
         TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
         Bot bot = new Bot(new Json());
         botsApi.registerBot(bot);
-
-
-
     }
 }

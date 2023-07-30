@@ -1,5 +1,7 @@
 package geo.geopointsTgBot;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
@@ -7,61 +9,25 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class Menu {
     Bot bot;
     private boolean isGgs = true;
     private boolean isGns = true;
     private String radius = "10";
 
-    public boolean isGgs() {
-        return isGgs;
-    }
-
-    public void setGgs(boolean ggs) {
-        isGgs = ggs;
-    }
-
-    public boolean isGns() {
-        return isGns;
-    }
-
-    public void setGns(boolean gns) {
-        isGns = gns;
-    }
-
-    public String getRadius() {
-        return radius;
-    }
-
-    public void setRadius(String radius) {
-        this.radius = radius;
-    }
-
     public Menu() {
         bot = new Bot();
-    }
-
-    public void sendText(Long who, String what) {
-        SendMessage sm = SendMessage.builder()
-                .chatId(who.toString())
-                .text(what).build();
-        try {
-            bot.execute(sm);
-        } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     ReplyKeyboardMarkup menu = new ReplyKeyboardMarkup();
 
     public SendMessage replyMenu(long messageId) {
-
-
         List<KeyboardRow> rows = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
         KeyboardButton mainMenu = new KeyboardButton("Настройки");
@@ -76,19 +42,20 @@ public class Menu {
         return messageConfig;
     }
 
-    InlineKeyboardButton option1Button = new InlineKeyboardButton("✅ пункты ГГС");
-    InlineKeyboardButton option2Button = new InlineKeyboardButton("✅ пункты ГНС");
-    InlineKeyboardButton option0Button = new InlineKeyboardButton("Укажите радиус поиска");
-    InlineKeyboardButton option3Button = new InlineKeyboardButton("5 км");
-    InlineKeyboardButton option4Button = new InlineKeyboardButton("✅ 10 км");
-    InlineKeyboardButton option5Button = new InlineKeyboardButton("15 км");
-    InlineKeyboardButton option6Button = new InlineKeyboardButton("20 км");
-
     public SendMessage inlineMenu(long messageId, boolean isGgs, boolean isGns, String radius) {
+        InlineKeyboardButton option1Button = new InlineKeyboardButton("✅ пункты ГГС");
+        InlineKeyboardButton option2Button = new InlineKeyboardButton("✅ пункты ГНС");
+        InlineKeyboardButton option0Button = new InlineKeyboardButton("Укажите радиус поиска");
+        InlineKeyboardButton option3Button = new InlineKeyboardButton("5 км");
+        InlineKeyboardButton option4Button = new InlineKeyboardButton("✅ 10 км");
+        InlineKeyboardButton option5Button = new InlineKeyboardButton("15 км");
+        InlineKeyboardButton option6Button = new InlineKeyboardButton("20 км");
+
         option3Button.setText("5 км");
         option4Button.setText("10 км");
         option5Button.setText("15 км");
         option6Button.setText("20 км");
+
         if (isGgs) option1Button.setText("✅ пункты ГГС");
         else option1Button.setText("❌ пункты ГГС");
         option1Button.setCallbackData("option1");
@@ -137,10 +104,7 @@ public class Menu {
     }
 
     public void handleCallback(Update update) {
-
         String callbackData = update.getCallbackQuery().getData();
-
-
         switch (callbackData) {
             case ("option1") -> {
                 if (isGgs) {
