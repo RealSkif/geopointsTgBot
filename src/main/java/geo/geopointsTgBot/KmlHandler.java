@@ -67,7 +67,7 @@ public class KmlHandler {
             kmlPoints.append(kmlPoint);
         }
 
-        String kml = kmlHeader + kmlPoints.toString() + kmlFooter;
+        String kml = kmlHeader + kmlPoints + kmlFooter;
 
         File file = new File("output.kml");
         FileWriter writer = new FileWriter(file);

@@ -7,10 +7,31 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 public class UserInputHandler {
     Menu menu;
     Json json;
+    Bot bot;
 
+    public UserInputHandler() {
+        bot = new Bot();
+    }
+
+    public void handleUserMessage(String msg, long chatId) throws TelegramApiException, IOException {
+        String outOfRange = "Введенные координаты выходят за границы Российской Федерации." + " Для РФ диапазон широт от 41 до 82 градусов, долгот от 19 до 180";
+        String wrongInput = "Неправильно введен запрос. Убедитесь, что он соотвествует следующему формату:\n" + "\"широта, долгота (например '55.168949, 61.212220')";
+        bot.execute(menu.replyMenu(chatId));
+        if (msg.equals("Настройки"))
+            bot.execute(menu.inlineMenu(chatId, menu.isGgs(), menu.isGns(), menu.getRadius()));
+        if (!validateInput(msg) && (!msg.equals("Настройки") && !msg.equals("/start"))) {
+            sendText(chatId, wrongInput);
+            if (!validateCoords(msg)) sendText(chatId, outOfRange);
+        } else {
+            handleUserInput(msg, chatId);
+        }
+    }
 
     public void handleUserInput(String msg, long chatId) throws IOException {
         String[] temp = msg.split("[,\\s]+");
@@ -49,5 +70,14 @@ public class UserInputHandler {
         String[] temp = input.split("[,\\s]+");
         return !(Double.parseDouble(temp[0]) < minLatitude) && !(Double.parseDouble(temp[0]) > maxLatitude)
                 && !(Double.parseDouble(temp[1]) < minLongitude) && !(Double.parseDouble(temp[0]) > maxLongitude);
+    }
+
+    public void sendText(Long who, String what) {
+        SendMessage sm = SendMessage.builder().chatId(who.toString()).text(what).build();
+        try {
+            bot.execute(sm);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
