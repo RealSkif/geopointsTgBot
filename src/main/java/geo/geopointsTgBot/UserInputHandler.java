@@ -11,15 +11,13 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class UserInputHandler {
-    Menu menu;
-    Json json;
     Bot bot;
 
     public UserInputHandler() {
         bot = new Bot();
     }
 
-    public void handleUserMessage(String msg, long chatId) throws TelegramApiException, IOException {
+    public void handleUserMessage(String msg, long chatId, Menu menu, Json json) throws TelegramApiException, IOException {
         String outOfRange = "Введенные координаты выходят за границы Российской Федерации." + " Для РФ диапазон широт от 41 до 82 градусов, долгот от 19 до 180";
         String wrongInput = "Неправильно введен запрос. Убедитесь, что он соотвествует следующему формату:\n" + "\"широта, долгота (например '55.168949, 61.212220')";
         bot.execute(menu.replyMenu(chatId));
@@ -29,22 +27,22 @@ public class UserInputHandler {
             sendText(chatId, wrongInput);
             if (!validateCoords(msg)) sendText(chatId, outOfRange);
         } else {
-            handleUserInput(msg, chatId);
+            handleUserInput(msg, chatId, menu, json);
         }
     }
 
-    public void handleUserInput(String msg, long chatId) throws IOException {
+    public void handleUserInput(String msg, long chatId, Menu menu, Json json) throws IOException {
         String[] temp = msg.split("[,\\s]+");
         String jsonString = "{\n\"x\":\"" + temp[0].trim() + "\",\n\"y\":\"" + temp[1].trim() +
                 "\",\n\"radius\":\"" + menu.getRadius() + "\"\n}";
         JSONArray ggsList = new JSONArray();
         JSONArray gnsList = new JSONArray();
         if (menu.isGgs()) {
-            String GGS_URL = "http://194.87.199.170:8888/ggs";
+            String GGS_URL = "http://193.176.158.169:8888/ggs";
             ggsList = new JSONArray(json.sendJsonToUrl(jsonString, GGS_URL));
         }
         if (menu.isGns()) {
-            String GNS_URL = "http://194.87.199.170:8888/gns";
+            String GNS_URL = "http://193.176.158.169:8888/gns";
             gnsList = new JSONArray(json.sendJsonToUrl(jsonString, GNS_URL));
         }
         File fileGgs;

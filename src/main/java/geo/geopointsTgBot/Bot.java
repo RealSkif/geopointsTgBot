@@ -31,7 +31,7 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "???";
+        return "6054614033:AAFyCqN0X42aLqczS4zux9m_VCAAsjk6EAM";
     }
 
     public void onUpdateReceived(Update update) {
@@ -44,8 +44,8 @@ public class Bot extends TelegramLongPollingBot {
                 execute(menu.inlineMenu(chatId, menu.isGgs(), menu.isGns(), menu.getRadius()));
             } else {
                 msg = update.getMessage().getText();
-                chatId = update.getUpdateId();
-                userInputHandler.handleUserMessage(msg, chatId);
+                chatId = update.getMessage().getChatId();
+                userInputHandler.handleUserMessage(msg, chatId, menu, json);
             }
         } catch (TelegramApiException | IOException e) {
             throw new RuntimeException(e);

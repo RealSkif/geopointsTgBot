@@ -78,7 +78,7 @@ public class KmlHandler {
 
     public static void sendKml(File file, String chatId) {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost upload = new HttpPost("https://api.telegram.org/bot???/sendDocument");
+        HttpPost upload = new HttpPost("https://api.telegram.org/bot6054614033:AAFyCqN0X42aLqczS4zux9m_VCAAsjk6EAM/sendDocument");
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         builder.addBinaryBody("document", file, ContentType.DEFAULT_BINARY, file.getName());
