@@ -1,0 +1,42 @@
+syntax = "proto3";
+package geopoints;
+
+message GgsRequest{
+  float latitude = 1;
+  float longitude = 2;
+  float radius = 3;
+
+}
+message GgsResponse{
+  string name = 1;
+  string index = 2;
+  string mark = 3;
+  string sighType = 4;
+  string centerType = 5;
+  string msk = 6;
+  string regions = 7;
+  double latitude = 8;
+  double longitude = 9;
+}
+message GnsRequest{
+  float latitude = 1;
+  float longitude = 2;
+  float radius = 3;
+
+}
+message GnsResponse{
+  string name = 1;
+  string index = 2;
+  string mark = 3;
+  string sighType = 4;
+  string centerType = 5;
+  string msk = 6;
+  string regions = 7;
+  string mainGeographyFeature = 8;
+  double latitude = 9;
+  double longitude = 10;
+}
+service GeopointsService{
+  rpc ggs(GgsRequest) returns (stream GgsResponse);
+  rpc gns(GnsRequest) returns (stream GnsResponse);
+}

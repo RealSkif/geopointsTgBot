@@ -21,20 +21,19 @@ public class KmlHandler {
         String kmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n";
         String kmlFooter = "</kml>";
-
         StringBuilder kmlPoints = new StringBuilder();
         String kmlPoint = "";
-        for (int i = 0; i < gns.length(); i++) {
-            JSONObject json = gns.getJSONObject(i);
-
-            Double longitude = json.getDouble("latitude");
-            Double latitude = json.getDouble("longitude");
-            String name = (json.getString("name") != null) ? json.getString("name") : "Нет данных";
-            String index = (json.getString("index") != null) ? json.getString("index") : "Нет данных";
-            String mark = (json.getString("mark") != null) ? json.getString("mark") : "Нет данных";
-            String centerType = (json.getString("centerType") != null) ? json.getString("centerType") : "Нет данных";
-            String sighType = (json.getString("sighType") != null) ? json.getString("sighType") : "Нет данных";
-            String maingeographyfeature = (json.getString("maingeographyfeature") != null) ? json.getString("maingeographyfeature") : "Нет данных";
+        ggs.putAll(gns);
+        for (int i = 0; i < ggs.length(); i++) {
+            JSONObject json = ggs.getJSONObject(i);
+            double longitude = json.getDouble("latitude");
+            double latitude = json.getDouble("longitude");
+            String name = json.optString("name", "Нет данных");
+            String index = json.optString("index", "Нет данных");
+            String mark = json.optString("mark", "Нет данных");
+            String centerType = json.optString("centerType", "Нет данных");
+            String sighType = json.optString("sighType", "Нет данных");
+            String maingeographyfeature = json.optString("maingeographyfeature", "Нет данных");
             kmlPoint = "<Placemark>\n" +
                     "<name>" + name + "</name>\n" +
                     "<description>Индекс: " + index + ", марка: " + mark + ", тип центра: "
@@ -44,26 +43,6 @@ public class KmlHandler {
                     "</Point>\n" +
                     "</Placemark>\n";
 
-            kmlPoints.append(kmlPoint);
-        }
-        for (int i = 0; i < ggs.length(); i++) {
-            JSONObject json = ggs.getJSONObject(i);
-
-            double longitude = json.getDouble("latitude");
-            double latitude = json.getDouble("longitude");
-            String name = (json.getString("name") != null) ? json.getString("name") : "Нет данных";
-            String index = (json.getString("index") != null) ? json.getString("index") : "Нет данных";
-            String mark = (json.getString("mark") != null) ? json.getString("mark") : "Нет данных";
-            String centerType = (json.getString("centerType") != null) ? json.getString("centerType") : "Нет данных";
-            String sighType = (json.getString("sighType") != null) ? json.getString("sighType") : "Нет данных";
-            kmlPoint = "<Placemark>\n" +
-                    "<name>" + name + "</name>\n" +
-                    "<description>Индекс: " + index + ", марка: " + mark + ", тип центра: "
-                    + centerType + ", оп. знак: " + sighType + "</description>\n" +
-                    "<Point>\n" +
-                    "<coordinates>" + longitude + "," + latitude + "</coordinates>\n" +
-                    "</Point>\n" +
-                    "</Placemark>\n";
             kmlPoints.append(kmlPoint);
         }
 
@@ -78,7 +57,7 @@ public class KmlHandler {
 
     public static void sendKml(File file, String chatId) {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost upload = new HttpPost("https://api.telegram.org/bot6054614033:AAFyCqN0X42aLqczS4zux9m_VCAAsjk6EAM/sendDocument");
+        HttpPost upload = new HttpPost("https://api.telegram.org/bot/sendDocument");
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         builder.addBinaryBody("document", file, ContentType.DEFAULT_BINARY, file.getName());

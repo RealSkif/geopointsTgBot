@@ -38,11 +38,11 @@ public class UserInputHandler {
         JSONArray ggsList = new JSONArray();
         JSONArray gnsList = new JSONArray();
         if (menu.isGgs()) {
-            String GGS_URL = "http://193.176.158.169:8888/ggs";
+            String GGS_URL = "http://193.176.158.169:8080/ggs";
             ggsList = new JSONArray(json.sendJsonToUrl(jsonString, GGS_URL));
         }
         if (menu.isGns()) {
-            String GNS_URL = "http://193.176.158.169:8888/gns";
+            String GNS_URL = "http://193.176.158.169:8080/gns";
             gnsList = new JSONArray(json.sendJsonToUrl(jsonString, GNS_URL));
         }
         File fileGgs;
