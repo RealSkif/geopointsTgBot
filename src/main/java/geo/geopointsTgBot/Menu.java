@@ -16,13 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 public class Menu {
-    Bot bot;
     private boolean isGgs = true;
     private boolean isGns = true;
     private String radius = "10";
 
     public Menu() {
-        bot = new Bot();
     }
 
     ReplyKeyboardMarkup menu = new ReplyKeyboardMarkup();
@@ -106,20 +104,8 @@ public class Menu {
     public void handleCallback(Update update) {
         String callbackData = update.getCallbackQuery().getData();
         switch (callbackData) {
-            case ("option1") -> {
-                if (isGgs) {
-                    isGgs = false;
-                } else if (!isGgs) {
-                    isGgs = true;
-                }
-            }
-            case ("option2") -> {
-                if (isGns) {
-                    isGns = false;
-                } else {
-                    isGns = true;
-                }
-            }
+            case ("option1") -> isGgs = !isGgs;
+            case ("option2") -> isGns = !isGns;
             case ("option3") -> radius = "5";
             case ("option4") -> radius = "10";
             case ("option5") -> radius = "15";

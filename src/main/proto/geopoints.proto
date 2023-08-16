@@ -2,9 +2,9 @@ syntax = "proto3";
 package geopoints;
 
 message GgsRequest{
-  float latitude = 1;
-  float longitude = 2;
-  float radius = 3;
+  double latitude = 1;
+  double longitude = 2;
+  double radius = 3;
 
 }
 message GgsResponse{
@@ -19,9 +19,9 @@ message GgsResponse{
   double longitude = 9;
 }
 message GnsRequest{
-  float latitude = 1;
-  float longitude = 2;
-  float radius = 3;
+  double latitude = 1;
+  double longitude = 2;
+  double radius = 3;
 
 }
 message GnsResponse{
